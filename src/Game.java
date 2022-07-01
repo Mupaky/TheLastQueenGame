@@ -12,7 +12,7 @@ public class Game {
     public static void main(String[] args) {
         int count = 0;
         int id = 2;
-        Game game = new Game(8,8);
+        Game game = new Game(6,8);
         game.startGame();
         System.out.println("Player " + game.getPlayerTurn() + " turn.   id = " + id );
         if(game.placeQueen(id)) {
@@ -43,7 +43,7 @@ public class Game {
 
         //Test Player 2
         System.out.println("-----------------------------------------------");
-        id = 24;
+        id = 28;
         System.out.println("\n Player " + game.getPlayerTurn()  + " turn.   id = " + id );
         if(game.placeQueen(id)){
             System.out.println("Player 1 table");
@@ -72,7 +72,7 @@ public class Game {
         }
         //Test Player 1
         System.out.println("-----------------------------------------------");
-        id = 28;
+        id = 33;
 
         System.out.println("\n Player " + game.getPlayerTurn()  + " turn.   id = " + id );
         if(game.placeQueen(id)){
@@ -236,7 +236,7 @@ public class Game {
     }
 
     public int makeIdToX(int id){
-        int var = (int)Math.floor(id/(maxHeight - 1));
+        int var = (int)Math.ceil(id/maxWidth);
         if(id == 0 || var == 0){
             return 0;
         }
