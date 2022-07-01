@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Game {
     private List<List<Boolean>> playerOne;
@@ -11,96 +12,41 @@ public class Game {
 
     public static void main(String[] args) {
         int count = 0;
-        int id = 2;
+        int id;
         Game game = new Game(6,8);
         game.startGame();
-        System.out.println("Player " + game.getPlayerTurn() + " turn.   id = " + id );
-        if(game.placeQueen(id)) {
-            System.out.println("Player 1 table");
-            for (int j = 0; j <= game.playerTwo.size() - 1; j++) {
-                for (int i = 0; i <= game.playerTwo.get(0).size() - 1; i++) {
-                    System.out.print("[" + count + "]" + game.playerOne.get(j).get(i) + "   ");
-                    count++;
+
+        for (int t = 0; t <= 1000; t++){
+            Scanner scanner = new Scanner(System.in);
+            id = scanner.nextInt();
+            System.out.println("Player " + game.getPlayerTurn() + " turn.   id = " + id );
+            if(game.placeQueen(id)) {
+                System.out.println("Player 1 table");
+                for (int j = 0; j <= game.playerTwo.size() - 1; j++) {
+                    for (int i = 0; i <= game.playerTwo.get(0).size() - 1; i++) {
+                        System.out.print("[" + count + "]" + game.playerOne.get(j).get(i) + "   ");
+                        count++;
+                    }
+                    System.out.println("");
                 }
-                System.out.println("");
-            }
-            count = 0;
-            System.out.println("Player 2 table");
-            for (int j = 0; j <= game.playerTwo.size() - 1; j++) {
-                for (int i = 0; i <= game.playerTwo.get(0).size() - 1; i++) {
-                    System.out.print("[" + count + "]" + game.playerTwo.get(j).get(i) + "   ");
-                    count++;
+                count = 0;
+                System.out.println("Player 2 table");
+                for (int j = 0; j <= game.playerTwo.size() - 1; j++) {
+                    for (int i = 0; i <= game.playerTwo.get(0).size() - 1; i++) {
+                        System.out.print("[" + count + "]" + game.playerTwo.get(j).get(i) + "   ");
+                        count++;
+                    }
+                    System.out.println("");
                 }
-                System.out.println("");
+                count = 0;
             }
-            count = 0;
-        }
-
-        System.out.println("");
-
-
-
-
-        //Test Player 2
-        System.out.println("-----------------------------------------------");
-        id = 28;
-        System.out.println("\n Player " + game.getPlayerTurn()  + " turn.   id = " + id );
-        if(game.placeQueen(id)){
-            System.out.println("Player 1 table");
-            for(int j = 0; j <= game.playerTwo.size() - 1; j++){
-                for(int i = 0; i <= game.playerTwo.get(0).size() - 1; i++){
-                    System.out.print("[" + count + "]" + game.playerOne.get(j).get(i) + "   ");
-                    count++;
-                }
-                System.out.println("");
-            }
-            count = 0;
-            System.out.println("Player 2 table");
-            for(int j = 0; j <= game.playerTwo.size() - 1; j++){
-                for(int i = 0; i <= game.playerTwo.get(0).size() - 1; i++){
-                    System.out.print("[" + count + "]" + game.playerTwo.get(j).get(i) + "   ");
-                    count++;
-                }
-                System.out.println("");
-            }
-            count = 0;
 
             System.out.println("");
-
-
-
+            System.out.println("-----------------------------------------------");
         }
-        //Test Player 1
-        System.out.println("-----------------------------------------------");
-        id = 33;
-
-        System.out.println("\n Player " + game.getPlayerTurn()  + " turn.   id = " + id );
-        if(game.placeQueen(id)){
-            System.out.println("Player 1 table");
-            for(int j = 0; j <= game.playerTwo.size() - 1; j++){
-                for(int i = 0; i <= game.playerTwo.get(0).size() - 1; i++){
-                    System.out.print("[" + count + "]" + game.playerOne.get(j).get(i) + "   ");
-                    count++;
-                }
-                System.out.println("");
-            }
-            count = 0;
-            System.out.println("Player 2 table");
-            for(int j = 0; j <= game.playerTwo.size() - 1; j++){
-                for(int i = 0; i <= game.playerTwo.get(0).size() - 1; i++){
-                    System.out.print("[" + count + "]" + game.playerTwo.get(j).get(i) + "   ");
-                    count++;
-                }
-                System.out.println("");
-            }
-            count = 0;
-
-
-            System.out.println("");
 
 
 
-        }
 
     }
 
@@ -176,7 +122,8 @@ public class Game {
 
     private void blockDiagonals(int x, int y, List<List<Boolean>> player){
         int count = 1;
-        if(x + 1 >= player.size() || x - 1 >= 0){
+        if(x + 1 >= player.size() || x - 1 < 0
+                || y + 1 >= player.get(0).size() || y - 1 < 0 ){
             return;
         }
         for(int i = (x + 1); i <= player.size() - 1; i++){
