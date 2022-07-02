@@ -5,19 +5,41 @@ import java.util.Scanner;
 public class Game {
     private List<List<Boolean>> playerOne;
     private List<List<Boolean>> playerTwo;
-    private int playerTurn;
+    private int playerTurn = 1;
     private int winner;
     private int maxWidth;
     private int maxHeight;
     private boolean isStopped;
+    private boolean firstGame = true;
+    private int turns = 10000;
 
     public static void main(String[] args) {
         int count = 0;
         int id;
-        Game game = new Game(8,8);
+        Game game = new Game(4,4);
         game.startGame();
 
-        for (int t = 0; t <= 1000; t++){
+        //Printing first tables
+        System.out.println("Player 1 table");
+        for (int j = 0; j <= game.playerTwo.size() - 1; j++) {
+            for (int i = 0; i <= game.playerTwo.get(0).size() - 1; i++) {
+                System.out.print("[" + count + "]" + game.playerOne.get(j).get(i) + "   ");
+                count++;
+            }
+            System.out.println("");
+        }
+        count = 0;
+        System.out.println("Player 2 table");
+        for (int j = 0; j <= game.playerTwo.size() - 1; j++) {
+            for (int i = 0; i <= game.playerTwo.get(0).size() - 1; i++) {
+                System.out.print("[" + count + "]" + game.playerTwo.get(j).get(i) + "   ");
+                count++;
+            }
+            System.out.println("");
+        }
+
+        //Starting the game
+        for (int t = game.getTurns(); t >= 0; t--){
             Scanner scanner = new Scanner(System.in);
             id = scanner.nextInt();
             System.out.println("Player " + game.getPlayerTurn() + " turn.   id = " + id );
@@ -40,11 +62,29 @@ public class Game {
                     System.out.println("");
                 }
                 count = 0;
-                game.changeTurn();
+
+                if(game.isStopped()){
+                    System.out.println("Player " + game.winner + " win the game.");
+                    System.out.println("Do you want to play again type Y \n" +
+                            "If not type anything else.");
+                    String val = scanner.next();
+                    if(val.equals("Y")){
+                        t = game.getTurns();
+                        game.resetPlayerTables();
+                        game.startGame();
+                    }else {
+                        break;
+                    }
+                }else{
+                    game.changeTurn();
+                }
+
             }
 
             System.out.println("");
             System.out.println("-----------------------------------------------");
+
+
         }
 
 
@@ -63,7 +103,14 @@ public class Game {
 
     public void startGame(){
         fillPlayerTables();
-        this.playerTurn = 1;
+        if(!firstGame){
+            if(playerTurn == 1){
+                this.playerTurn = 2;
+            }else{
+                this.playerTurn = 1;
+            }
+
+        }
         isStopped = false;
     }
 
@@ -81,6 +128,11 @@ public class Game {
                 playerTwo.get(i).add(Boolean.TRUE);
             }
         }
+    }
+
+    public void resetPlayerTables(){
+        playerOne = null;
+        playerTwo = null;
     }
 
     public boolean placeQueen(int id){
@@ -257,5 +309,13 @@ public class Game {
     public boolean isStopped() {
         boolean isGameStopped = isStopped;
         return isGameStopped;
+    }
+
+    public int getTurns() {
+        return turns;
+    }
+
+    public void resetTurns() {
+        this.turns = 10000;
     }
 }
